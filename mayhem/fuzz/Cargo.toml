@@ -1,0 +1,31 @@
+# Ported from the old fork's root fuzz/ crate (commit 434076f "rules and terms fuzzer"),
+# moved additively under mayhem/. The old crate also declared an UNUSED path-dep on the
+# upstream `mlatu` crate (never referenced by the harness); it was dropped because
+# upstream's src/lib.rs needs the long-removed #![feature(stdio_locked)] and the old fork
+# patched upstream source to build it — the harness only exercises mlatu_lib.
+# mlatu-lib is pinned to the same rev the old fork's fuzz/Cargo.lock locked.
+[package]
+name = "mlatu-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+mlatu-lib = { git = "https://github.com/mlatu-lang/libraries", package = "mlatu", rev = "5de281f8651cd848560e5431729bd4760e175d17" }
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "parse"
+path = "fuzz_targets/parse.rs"
+test = false
+doc = false

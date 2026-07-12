@@ -1,0 +1,18 @@
+# Authored known-answer oracle for the mlatu language library (mlatu_lib) — upstream
+# mlatu-lang/mlatu ships no test suite of its own. Same pinned mlatu-lib rev as the
+# fuzz crate, so the oracle asserts the exact code the `parse` target fuzzes.
+[package]
+name = "mlatu-oracle"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+mlatu-lib = { git = "https://github.com/mlatu-lang/libraries", package = "mlatu", rev = "5de281f8651cd848560e5431729bd4760e175d17" }
+im = "15"
+
+[workspace]
+members = ["."]
+
+[lib]
+path = "src/lib.rs"

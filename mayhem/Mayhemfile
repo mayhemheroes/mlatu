@@ -1,0 +1,10 @@
+# Target name `parse` preserved from the old fork's mayhem/parse.mayhemfile so the
+# project's Mayhem run history stays attached. The old file also ran a second
+# non-instrumented cmd (/parse_no_inst); the instrumented libFuzzer binary is the
+# real target — kept as the single cmd.
+project: mlatu
+target: parse
+
+cmds:
+  - cmd: /mayhem/parse
+    libfuzzer: true
